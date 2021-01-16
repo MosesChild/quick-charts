@@ -1,4 +1,6 @@
 // simpleTable - an easy way to explore js objects in the DOM
+var primaryObject;
+
 
 function createElement(element, options) {
   // fast element creation with attributes, but potentially dangerous! no check if valid DOM element properties!
@@ -76,7 +78,10 @@ const expand = (e) => {
     //otherwise make rows for current object.
     let baseRow = e.target.parentNode.parentNode;
     let baseColumn = getColumnNumber(e.target.parentNode);
-    makeSubRows(e.target.myObject, baseRow, baseColumn, baseRow.dataset.name);
+    let currentAddress=e.target.parentNode.previousElementSibling.textContent;
+    let currentObject=primaryObject[currentAddress];
+    console.log(primaryObject, currentAddress)
+    makeSubRows(currentObject, baseRow, baseColumn, baseRow.dataset.name);
     console.log(
       " Making new rows after ",
       baseRow,
@@ -87,6 +92,7 @@ const expand = (e) => {
 };
 
 const formatCellValue = (key, value) => {
+
   let rowCell = document.createElement("td");
 
   if (typeof value === "number") {
@@ -98,7 +104,8 @@ const formatCellValue = (key, value) => {
 
     let openButton = document.createElement("button");
     openButton.textContent = key;
-    openButton.myObject = value;
+    openButton.dataset.address=key;
+    
     rowCell.appendChild(openButton);
     openButton.addEventListener("click", expand);
 
@@ -158,6 +165,7 @@ const makeSubRows = (object, currentRow, keyColumn, parentName) => {
 
 // make simpleTable a factory object with some methods!
 const simpleTable = (targetObject) => {
+  primaryObject=targetObject;// use a Global variable (module scoped actually...) to make available to 'expand' function
   //Initializing creates Table.
   var table = document.createElement("table");
   let keys = Object.keys(targetObject);

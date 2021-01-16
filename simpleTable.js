@@ -1,3 +1,5 @@
+// simpleTable - an easy way to explore js objects in the DOM
+
 function createElement(element, options) {
   // fast element creation with attributes, but potentially dangerous! no check if valid DOM element properties!
   let domObject = Object.assign(document.createElement(element), options);

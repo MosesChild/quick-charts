@@ -1,6 +1,6 @@
 import {
     simpleTable
-} from './simpleTable.js';
+} from '../simpleTable.js';
 // an example of how to use simpleTable.
 
 var exampleObject = {
@@ -13,5 +13,7 @@ var exampleObject = {
         value: 15
     }
 };
-console.log(exampleObject);
+
+var nested=document.querySelector('nestedObject1');
+console.log(   `nested ${nested}`)
 simpleTable(exampleObject);
